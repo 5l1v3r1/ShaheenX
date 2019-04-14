@@ -19,8 +19,8 @@ ShaheenX in action
 possible links for possible take overs from Google and Bing
 
 
-# What VASL means?
-ShaheenX is a urdu word, it means Eagle, yes a Project: Eagle-X to protect/hack with full automation to find possible 
+# What Shaheen means?
+Shaheen is a urdu word, it means Eagle, yes a Project: Eagle-X to protect/hack with full automation to find possible 
 take overs, this is a must have tool for script kiddies or pentesters or those who are new in this
 Information Security field. It is fully automatic sub domain finder from master domain including brute forcing
 wildcard enteries in seconds but not only that it can also and fully automatically find sub domains links between
