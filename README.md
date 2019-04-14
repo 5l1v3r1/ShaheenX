@@ -30,6 +30,10 @@ their aliases and cname records, showing only relevant information for possible 
 1. Web requests are automatically handled by Perl modules.
 2. Web requests are automatically handled by Bash, Awk and Sed scripting modules.
 
+# Error Handling Capability
+1. ShaheenX have error handling capability for including in Http/https requests
+2. It can guide why attack failed and how to fix it
+
 # Advantages of ShaheenX
 1. ShaheenX is fully automatic, it doesn't want user to wait and output false positive information but it fully provide useful 
 information or no information at all without wasting time.
