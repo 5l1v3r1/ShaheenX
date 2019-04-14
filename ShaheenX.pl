@@ -95,6 +95,7 @@ $p = HTML::TokeParser->new(\$rrs);
   }
  } 
 print "[+] Finished enumerating Bing\n";
+$cleaner = system("./bingcleaner.sh");
 exit;
 }
 
@@ -137,4 +138,5 @@ $p = HTML::TokeParser->new(\$rrs);
  } 
 }
 print "[+] Finished enumerating Google\n";
+$cleaner = system("./googlecleaner.sh");
 exit;
