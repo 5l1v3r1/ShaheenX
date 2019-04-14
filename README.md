@@ -10,7 +10,7 @@ EULA
 
 ShaheenX in action
 <div align="center">
-    <img src="http://oi66.tinypic.com/2cei43p.jpg" width="400px"</img> 
+    <img src="http://oi67.tinypic.com/9h53qg.jpg" width="400px"</img> 
 </div>
 
 
