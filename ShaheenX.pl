@@ -124,7 +124,7 @@ $rrs = $resp->content;
 
 # ERROR HANDLGING ALGORITHM ######
 if ($rrs =~ m/Our systems have detected unusual traffic/i) {
-print "[!] Error: Bing is blocking our requests, change your IP and clear cache [!]\n\n";
+print "[!] Error: Google is blocking our requests, change your IP and clear cache [!]\n\n";
 exit;
 }
 else {}
