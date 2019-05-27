@@ -64,9 +64,9 @@ if ($^O =~ /MSWin32/) {system("cls"); system("color A");
 
 # USER AGENT ALGORITHM ######
 $ag = LWP::UserAgent->new();
-$ag->agent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36");
+$ag->agent("Mozilla/5.0 (X11; U; Linux i686; en-US; rv:0.9.3) Gecko/20010801");
 $ag->timeout(10);
-#$ag->agent("Mozilla/5.0 (X11; U; Linux i686; en-US; rv:0.9.3) Gecko/20010801");
+#$ag->agent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36");
 #Extra user-agent in case, google block any kind of request
 
 # DORK AND QUERY ALGORITHM ######
