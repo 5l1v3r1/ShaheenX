@@ -22,4 +22,5 @@
 sed 's~http[s]*://~~g' googlesubdomain.txt
 sed 's/\.com.*/.com/' googlesubdomain.txt > googlesubdomain
 sed 's~http[s]*://~~g' googlesubdomain > googlesubdomain.txt
+rm googlesubdomain
 ./googlechecker.sh
