@@ -70,11 +70,10 @@ $ag->timeout(10);
 #Extra user-agent in case, google block any kind of request
 
 # DORK AND QUERY ALGORITHM ######
-print color("bold white"),"[ + ] Enter domain name only: ";
+print color("bold Green"),"  \n\n        [ + ] Enter domain name only: ";
 chomp($dork=<STDIN>);
-print color('reset');
-print color("bold Green");
-print "\n";
+print color("yellow"), "\n";
+
 
 # PAGE SCRAPE ALROGITHM ######
 for (my $i=1; $i<=2000; $i+=10) {
