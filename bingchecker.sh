@@ -20,4 +20,3 @@
 
 #!/bin/bash
 dig -f bingsubdomain.txt ANY 2> /dev/null | awk '/CNAME/ {print}' > takeoverlist_bingsubdomains.txt
-rm bingsubdomain.txt
