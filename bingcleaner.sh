@@ -22,4 +22,5 @@
 sed 's~http[s]*://~~g' bingsubdomain.txt
 sed 's/\.com.*/.com/' bingsubdomain.txt > bingsubdomains
 sed 's~http[s]*://~~g' bingsubdomains > bingsubdomain.txt
+rm bingsubdomains
 ./bingchecker.sh
