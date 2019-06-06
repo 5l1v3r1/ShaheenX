@@ -19,4 +19,5 @@
 # *************************************************************************************** #
 
 #!/bin/bash
-dig -f googlesubdomain.txt ANY 2> /dev/null | awk '/CNAME/ {print}'
+dig -f googlesubdomain.txt ANY 2> /dev/null | awk '/CNAME/ {print}' > takeoverlist_googlesubdomains.txt
+rm googlesubdomain.txt
