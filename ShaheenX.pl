@@ -21,6 +21,9 @@
 #!/usr/bin/perl 
 
 use HTML::TokeParser;
+use Mojo;
+use Mojo::DOM;
+use HTML::TokeParser;
 use HTTP::Request;
 use LWP::Simple;
 use LWP::UserAgent;
@@ -35,6 +38,7 @@ use feature ':5.10';
 use LWP::UserAgent;
 no warnings 'uninitialized';
 use Term::ANSIColor;
+use Data::Validate::Domain qw(is_domain);
 
 system "clear";
 print color('bold red');
@@ -50,8 +54,13 @@ print "[ + ] Github: 		Https://www.github.com/haroonawanofficial\n";
 print "[ + ] Design Scheme: 	Extract all sub domains records automatically and find all aliases and cname records for possible takeover\n";
 print "[ + ] Usage: 		Read README.MD before using\n\n\n";
 print color('reset');
-print color("bold white"),"[ + ] Press 1 for Bing Search Engine\n";
-print color("bold white"),"[ + ] Press 2 for Google Search Engine\n";
+print color("bold white"),"[ + ]  1 - Bing Search Engine\n";
+print color("bold white"),"[ + ]  2 - Google Search Engine\n";
+print color("bold white"),"[ + ]  3 - Baidu Search Engine\n";
+print color("bold white"),"[ + ]  4 - Robtex Search Engine\n"; 
+print color("bold white"),"[ + ]  5 - Scan Combo Engine : censys / dnsdumpser / virustotal / threatcrowd / netcraft\n";
+print color("bold white"),"[ + ]  6 - Yahoo Search Engine\n";
+print color("bold white"),"[ + ]  7 - ASK Search Engine\n";
 print color("bold white"),"[ + ] Enter desired search engine option: ";
 print color("green");
 print color 'reset';
@@ -76,7 +85,7 @@ print color("yellow"), "\n";
 
 
 # PAGE SCRAPE ALROGITHM ######
-for (my $i=1; $i<=2000; $i+=10) {
+for (my $i=1; $i<=200; $i+=10) {
 $url = "https://www.bing.com/search?q=site%3A$dork.com+-www%3A$dork.com&filt=all&first=$i&FORM=PERE";
 $resp = $ag->request(HTTP::Request->new(GET => $url));
 $rrs = $resp->content;
@@ -100,7 +109,7 @@ $cleaner = system("./bingcleaner.sh");
 exit;
 }
 
-# OPTION 2 #######
+
 if ($name=~ "2")
 {
 if ($^O =~ /MSWin32/) {system("cls"); system("color A");
@@ -118,7 +127,7 @@ print color("yellow"), "\n";
 
 
 # PAGE SCRAPE ALROGITHM ######
-for (my $i=1; $i<=2000; $i+=10) {
+for (my $i=1; $i<=200; $i+=10) {
 $url = "https://google.com/search?q=site%3A$dork.com+-www%3A$dork.com&btnG=Search&hl=en-US&biw=&bih=&gbv=1&start=$i&filter=0";
 $resp = $ag->request(HTTP::Request->new(GET => $url));
 $rrs = $resp->content;
@@ -137,7 +146,175 @@ $p = HTML::TokeParser->new(\$rrs);
       open(OUT, ">>googlesubdomain.txt"); print OUT "@link\n"; close(OUT);
   }
  } 
-}
 print "[+] Finished enumerating Google\n";
 $cleaner = system("./googlecleaner.sh");
 exit;
+}
+
+if ($name=~ "3")
+{
+if ($^O =~ /MSWin32/) {system("cls"); system("color A");
+}else {}
+
+# USER AGENT ALGORITHM ######
+$ag = LWP::UserAgent->new();
+$ag->agent("Mozilla/5.0 (X11; U; Linux i686; en-US; rv:0.9.3) Gecko/20010801");
+$ag->timeout(10);
+#$ag->agent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36");
+#Extra user-agent in case, google block any kind of request
+
+# DORK AND QUERY ALGORITHM ######
+print color("bold Green"),"  \n\n        [ + ] Enter domain name only: ";
+chomp($dork=<STDIN>);
+print color("yellow"), "\n";
+
+# PAGE SCRAPE ALROGITHM ######
+for (my $i=1; $i<=200; $i+=10) {
+$url = "http://www.baidu.com/s?pn=$i&wd=site%3A$dork.com+-www%3A$dork.com&oq=site%3A$dork.com+-www%3A$dork.com";
+$resp = $ag->request(HTTP::Request->new(GET => $url));
+$rrs = $resp->content;
+
+# ERROR HANDLGING ALGORITHM ######
+if ($rrs =~ m/404/i) {
+print "[!] Something went wrong [!]\n\n";
+exit;
+}
+else {}
+
+$p = HTML::TokeParser->new(\$rrs);
+  while ($p->get_tag("tr")) {
+      my @link = $p->get_trimmed_text("/tr");
+      foreach(@link) { print "$_\n"; }
+      open(OUT, ">>baidusubdomain.txt"); print OUT "@link\n"; close(OUT);
+  }
+ } 
+print "[+] Finished enumerating Baidu\n";
+$cleaner = system("./baiducleaner.sh");
+exit;
+}
+
+
+if ($name=~ "4")
+{
+if ($^O =~ /MSWin32/) {system("cls"); system("color A");
+}else {}
+
+# USER AGENT ALGORITHM ######
+$ag = LWP::UserAgent->new();
+$ag->agent("Mozilla/5.0 (X11; U; Linux i686; en-US; rv:0.9.3) Gecko/20010801");
+$ag->timeout(10);
+
+# DORK AND QUERY ALGORITHM ######
+print color("bold Green"),"  \n\n        [ + ] Enter domain name only: ";
+chomp($dork=<STDIN>);
+print color("yellow"), "\n";
+
+
+# PAGE SCRAPE ALROGITHM ######
+$url = "https://www.robtex.com/dns-lookup/$dork.com";
+$resp = $ag->request(HTTP::Request->new(GET => $url));
+$rrs = $resp->content;
+
+# ERROR HANDLGING ALGORITHM ######
+if ($rrs =~ m/404/i) {
+print "[!] Something went wrong [!]\n\n";
+exit;
+}
+else {}
+
+$p = HTML::TokeParser->new(\$rrs);
+  while ($p->get_tag("cite")) {
+      my @link = $p->get_trimmed_text("/cite");
+      foreach(@link) { print "$_\n"; }
+      open(OUT, ">>robtexsubdomain.txt"); print OUT "@link\n"; close(OUT);
+}
+print "[+] Finished enumerating Robtex\n";
+$cleaner = system("./robtexcleaner.sh");
+exit;
+}
+
+if ($name=~ "5")
+{
+if ($^O =~ /MSWin32/) {system("cls"); system("color A");
+}
+{
+	print color("bold Green"),"  \n\n        [ + ] Enter again domain name only: ";
+	chomp($domain=<STDIN>);
+	my $sub = system("python2 sub.py -v -d $domain.com");
+exit;
+}
+}
+
+
+if ($name=~ "6")
+{
+if ($^O =~ /MSWin32/) {system("cls"); system("color A");
+}else {}
+
+# USER AGENT ALGORITHM ######
+$ag = LWP::UserAgent->new();
+$ag->agent("Mozilla/5.0 (X11; U; Linux i686; en-US; rv:0.9.3) Gecko/20010801");
+$ag->timeout(10);
+
+# DORK AND QUERY ALGORITHM ######
+print color("bold Green"),"  \n\n        [ + ] Enter domain name only: ";
+chomp($dork=<STDIN>);
+print color("yellow"), "\n";
+
+# PAGE SCRAPE ALROGITHM ######
+for (my $i=1; $i<=200; $i+=10) {
+$url = "https://search.yahoo.com/search;?p=site%3A$dork.com&ei=UTF-8&fr=yfp-t&fp=$i&b=11&pz=10&bct=0&xargs=0";
+$resp = $ag->request(HTTP::Request->new(GET => $url));
+$rrs = $resp->content;
+
+$p = HTML::TokeParser->new(\$rrs);
+  while ($p->get_tag("b")) {
+      my @link = $p->get_trimmed_text("/b");
+      foreach(@link) { print "$_\n"; }
+      open(OUT, ">>yahoosubdomain.txt"); print OUT "@link\n"; close(OUT);
+  }
+}
+print "[+] Finished enumerating Yahoo\n";
+#$cleaner = system("./yahoocleaner.sh");
+exit;
+}
+
+if ($name=~ "7")
+{
+if ($^O =~ /MSWin32/) {system("cls"); system("color A");
+}else {}
+
+# USER AGENT ALGORITHM ######
+$ag = LWP::UserAgent->new();
+$ag->agent("Mozilla/5.0 (X11; U; Linux i686; en-US; rv:0.9.3) Gecko/20010801");
+$ag->timeout(10);
+
+# DORK AND QUERY ALGORITHM ######
+print color("bold Green"),"  \n\n        [ + ] Enter domain name only: ";
+chomp($dork=<STDIN>);
+print color("yellow"), "\n";
+
+# PAGE SCRAPE ALROGITHM ######
+for (my $i=1; $i<=20; $i+=1) {
+$url = "http://uk.ask.com/web?q=site%3A$dork.com&qsrc=998&o=0&l=dir&qo=pagination&page=$i";
+$resp = $ag->request(HTTP::Request->new(GET => $url));
+$rrs = $resp->content;
+
+# ERROR HANDLGING ALGORITHM ######
+if ($rrs =~ m/404/i) {
+print "[!] Something went wrong [!]\n\n";
+exit;
+}
+#else {}
+
+
+while ($rrs =~ m/class="PartialSearchResults-item-url">(.*?)<\/p>/g) { # while loop to check all the existing match for the regex
+  print $1."\n";
+}
+
+   open(OUT, ">>asksubdomain.txt"); print OUT "@link\n"; close(OUT);
+   }
+print "[+] Finished enumerating Ask\n";
+#$cleaner = system("./askcleaner.sh");
+exit;
+}
