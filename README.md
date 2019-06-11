@@ -15,9 +15,20 @@ ShaheenX in action
 
 
 # What is ShaheenX?
-1. ShaheenX is super fast, accurate and state of the art piece of software with full automation to find sub domains and find
-possible links for possible take overs from Google and Bing
+1. ShaheenX is super fast, accurate and state of the art piece of software for subdomain finding
 
+# Subdomain List
+1. Netcraft
+2. Google
+3. Bing
+4. Robtex
+5. Baidu
+6. Censys
+7. DnsDumpster
+8. Virustotal
+9. Threatcrowd
+10. Yahoo
+11. Ask
 
 # What Shaheen means?
 Shaheen is a urdu word, it means Eagle, yes a Project: Eagle-X to protect/hack with full automation to find possible 
