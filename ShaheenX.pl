@@ -127,7 +127,7 @@ print color("yellow"), "\n";
 
 
 # PAGE SCRAPE ALROGITHM ######
-for (my $i=1; $i<=200; $i+=10) {
+for (my $i=1; $i<=2000; $i+=10) {
 $url = "https://google.com/search?q=site%3A$dork.com+-www%3A$dork.com&btnG=Search&hl=en-US&biw=&bih=&gbv=1&start=$i&filter=0";
 $resp = $ag->request(HTTP::Request->new(GET => $url));
 $rrs = $resp->content;
@@ -169,7 +169,7 @@ chomp($dork=<STDIN>);
 print color("yellow"), "\n";
 
 # PAGE SCRAPE ALROGITHM ######
-for (my $i=1; $i<=200; $i+=10) {
+for (my $i=1; $i<=2000; $i+=10) {
 $url = "http://www.baidu.com/s?pn=$i&wd=site%3A$dork.com+-www%3A$dork.com&oq=site%3A$dork.com+-www%3A$dork.com";
 $resp = $ag->request(HTTP::Request->new(GET => $url));
 $rrs = $resp->content;
@@ -262,20 +262,22 @@ chomp($dork=<STDIN>);
 print color("yellow"), "\n";
 
 # PAGE SCRAPE ALROGITHM ######
-for (my $i=1; $i<=200; $i+=10) {
-$url = "https://search.yahoo.com/search;?p=site%3A$dork.com&ei=UTF-8&fr=yfp-t&fp=$i&b=11&pz=10&bct=0&xargs=0";
+for (my $i=1; $i<=2000; $i+=11) {
+$url = "https://search.yahoo.com/search;_ylt=A0geK.G_YP9ccCkAjDlXNyoA;_ylu=X3oDMTEzajVvczlrBGNvbG8DYmYxBHBvcwMxBHZ0aWQDBHNlYwNwYWdpbmF0aW9u?p=site%3A$dork.com&pz=10&fr=sfp&bct=0&b=$i&pz=10&bct=0&xargs=0";
 $resp = $ag->request(HTTP::Request->new(GET => $url));
 $rrs = $resp->content;
 
-$p = HTML::TokeParser->new(\$rrs);
-  while ($p->get_tag("b")) {
-      my @link = $p->get_trimmed_text("/b");
-      foreach(@link) { print "$_\n"; }
+
+while ($rrs =~ m/<b>\s*(.*?)\s*<\/b>/g) {
+   if (is_domain($1)) {
+      print $1."\n";
+}
       open(OUT, ">>yahoosubdomain.txt"); print OUT "@link\n"; close(OUT);
   }
 }
 print "[+] Finished enumerating Yahoo\n";
-#$cleaner = system("./yahoocleaner.sh");
+$duplicateremove = system("awk '!seen[$0]++' yahoosubdomain.txt > yahoosubdomains.txt && rm yahoosubdomain.txt && cp yahoosubdomains.txt yahoosubdomain.txt");
+$cleaner = system("./yahoochecker.sh");
 exit;
 }
 
@@ -315,6 +317,6 @@ while ($rrs =~ m/class="PartialSearchResults-item-url">(.*?)<\/p>/g) { # while l
    open(OUT, ">>asksubdomain.txt"); print OUT "@link\n"; close(OUT);
    }
 print "[+] Finished enumerating Ask\n";
-#$cleaner = system("./askcleaner.sh");
+$cleaner = system("./askcleaner.sh");
 exit;
 }
