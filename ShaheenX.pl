@@ -239,11 +239,12 @@ if ($^O =~ /MSWin32/) {system("cls"); system("color A");
 }
 {
 	print color("bold Green"),"  \n\n        [ + ] Enter again domain name only: ";
-	print color("bold Green"),"  \n\n        [ + ] Extracting subdomains ";
-	print color("bold Green"),"  \n\n        [ + ] Writing data in 5_subdomains.txt ";
-	print color("bold Green"),"  \n\n        [ + ] Getting Data Ready ";
-
 	chomp($domain=<STDIN>);
+        print color("bold Green"),"  \n        [ + ] Extracting subdomains ";
+	print color("bold Green"),"  \n        [ + ] Writing data in 5_subdomains.txt ";
+	print color("bold Green"),"  \n        [ + ] Getting Data Ready \n";
+
+
 	my $sub = system("python2 sub.py -v -d $domain.com >  5_subdomains.txt");
         $cleaner1 = system("./5_combo.sh");
 exit;
